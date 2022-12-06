@@ -18,7 +18,7 @@ RUN printf "machine github.com\n\
 RUN chmod 600 /root/.netrc
 
 # run script
-RUN chmod +x ./build-caddy && ./build-caddy $APPMASKER_ACCESS_TOKEN $ACCESS_TOKEN_USR $ACCESS_TOKEN_PWD $PLUGIN_REPOS
+RUN chmod +x ./plugin-pipeline/build-caddy.sh && ./plugin-pipeline/build-caddy.sh $APPMASKER_ACCESS_TOKEN $ACCESS_TOKEN_USR $ACCESS_TOKEN_PWD $PLUGIN_REPOS
 
 FROM caddy:2.6.0
 
