@@ -24,6 +24,6 @@ FROM caddy:2.6.0
 
 COPY --from=builder /usr/bin/caddy /usr/bin/caddy
 
-COPY managed-config.json /etc/caddy/
+COPY ./plugin-pipeline/managed-config.json /etc/caddy/
 
 CMD ["caddy", "run", "--config", "/etc/caddy/managed-config.json"]  

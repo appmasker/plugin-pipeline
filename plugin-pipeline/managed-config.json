@@ -1,0 +1,15 @@
+{
+  "admin": {
+    "config": {
+      "load": {
+        "module": "http",
+        "url": "{env.CONFIG_URL}/{env.FLY_ALLOC_ID}",
+        "header": {
+          "x-api-key": [
+            "{env.X_API_KEY}"
+          ]
+        }
+      }
+    }
+  }
+}
