@@ -17,8 +17,8 @@ RUN printf "machine github.com\n\
     >> /root/.netrc
 RUN chmod 600 /root/.netrc
 RUN echo "$PWD"
-RUN ls plugin-pipeline
 RUN ls -al /
+RUN ls plugin-pipeline
 RUN ls -al
 # run script
 RUN chmod +x ./plugin-pipeline/build-caddy.sh && ./plugin-pipeline/build-caddy.sh $APPMASKER_ACCESS_TOKEN $ACCESS_TOKEN_USR $ACCESS_TOKEN_PWD $PLUGIN_REPOS
