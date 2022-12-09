@@ -14,16 +14,20 @@ git clone "https://oauth2:${APPMASKER_ACCESS_TOKEN}@github.com/appmasker/caddy_r
 
 echo "Done cloning repos. Assembling user plugins."
 
-getPluginReposFlags() {
-  REPOFLAGS=""
+getPluginModules() {
+  MODULE_FLAGS=""
   for repo in ${PLUGIN_REPOS//,/ }
     do
-      REPOFLAGS+=" --with ${repo}"
+      MODULE_FLAGS="$MODULE_FLAGS --with $repo"
     done
-  echo "${REPOFLAGS}"
+  echo "$MODULE_FLAGS"
 }
 
-eval "xcaddy build v2.6.0 \
-  $(getPluginReposFlags) \
+BUILD_COMMAND="xcaddy build v2.6.0 \
+  $(getPluginModules) \
   --with github.com/appmasker/caddy-admin-repeat=./caddy-admin-repeat \
   --with github.com/appmasker/caddy_rest_storage=./caddy_rest_storage"
+
+echo "FINAL COMMAND: $BUILD_COMMAND"
+
+eval "$BUILD_COMMAND"
