@@ -1,4 +1,4 @@
-# plugin-pipeline
+# Plugin Pipeline
 A dockerfile for assembling custom Caddy builds
 
 
@@ -27,3 +27,17 @@ Note that docker uses a Ubuntu shell that isn't fully compatible with bash!
 ```bash
 ./plugin-pipeline/build-caddy.sh $GITHUB_APPMASKER_TOKEN nothing nothing github.com/abiosoft/caddy-exec,github.com/caddyserver/ntlm-transport
 ```
+
+## Notes
+
+Go [Docker Image](https://github.com/docker-library/golang/blob/master/1.19/alpine3.16/Dockerfile#L108) `$GOPATH`:
+```
+ENV GOPATH /go
+ENV PATH $GOPATH/bin:$PATH
+RUN mkdir -p "$GOPATH/src" "$GOPATH/bin" && chmod -R 777 "$GOPATH"
+WORKDIR $GOPATH
+```
+
+# Caddy Builder
+## Build Image & Push
+Use `cd ./caddy-builder && ./start.sh`

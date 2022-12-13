@@ -1,11 +1,11 @@
-FROM caddy:2.6.0-builder AS builder
+FROM appmasker/prefetch-deps:v2.6.0 AS builder
 
 ARG ACCESS_TOKEN_USR="nothing"
 ARG ACCESS_TOKEN_PWD="nothing"
 ARG APPMASKER_ACCESS_TOKEN="nothing"
 ARG PLUGIN_REPOS=""
 
-ENV GOPRIVATE="github.com/${ACCESS_TOKEN_USR}/*,github.com/appmasker/*"
+ENV GOPRIVATE="github.com/${ACCESS_TOKEN_USR}/*"
 
 RUN printf "machine github.com\n\
     login ${ACCESS_TOKEN_USR}\n\
