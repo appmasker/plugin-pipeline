@@ -11,7 +11,7 @@ eval PLUGIN_REPOS="$4"
 echo "Cloning AppMasker repos"
 
 git clone "https://oauth2:${GITHUB_APPMASKER_TOKEN}@github.com/appmasker/caddy-admin-repeat" --single-branch --depth 1
-git clone "https://oauth2:${GITHUB_APPMASKER_TOKEN}@github.com/appmasker/caddy_rest_storage" --single-branch --depth 1
+git clone "https://github.com/appmasker/caddy_rest_storage" --single-branch --depth 1
 
 echo "Done cloning repos. Assembling user plugins."
 
