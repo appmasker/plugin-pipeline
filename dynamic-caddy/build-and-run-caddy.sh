@@ -64,6 +64,10 @@ BUILD_COMMAND="xcaddy build \
   $(getPluginModules) \
   --with github.com/appmasker/caddy-admin-repeat=./caddy-admin-repeat \
   --with github.com/appmasker/caddy_rest_storage=./caddy_rest_storage"
+# BUILD_COMMAND="xcaddy build 6e6557926cf8cf732f0a3cb802a15878d8976690 \
+#   $(getPluginModules) \
+#   --with github.com/appmasker/caddy-admin-repeat@07155b787c4c4c92f2fc58924f509198cfaf996d \
+#   --with github.com/appmasker/caddy_rest_storage@77f64b11c270d63d559618b0a1eca87d695de038"
 
 eval "$BUILD_COMMAND"
 

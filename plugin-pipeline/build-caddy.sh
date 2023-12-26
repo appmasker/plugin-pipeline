@@ -12,21 +12,38 @@ echo "Cloning AppMasker repos in parallel"
 
 git clone "https://oauth2:${GITHUB_APPMASKER_TOKEN}@github.com/appmasker/caddy-admin-repeat" --single-branch --depth 1 &
 git clone "https://github.com/appmasker/caddy_rest_storage" --single-branch --depth 1 &
-wait
 
 echo "Done cloning repos. Assembling user plugins."
 
-getPluginModules() {
-  MODULE_FLAGS=""
+# gather user's plugin modules
+
+MODULE_FLAGS=""
+
+if [ "$ACCESS_TOKEN_PWD" != "nothing" ]; then
+  echo "Cloning user repos in parallel with oauth2 token"
+  for repo in ${PLUGIN_REPOS//,/ }
+    do
+      echo "Processing repo: $repo"
+      git clone "https://oauth2:${ACCESS_TOKEN_PWD}@${repo}" --single-branch --depth 1 &
+      
+      path=$(basename "$repo")
+      MODULE_FLAGS="$MODULE_FLAGS --with $repo=./$path"
+    done
+
+  echo "Done cloning repos with oauth2 token. Assembling user plugins."
+else
+  echo "No oauth2 token provided."
   for repo in ${PLUGIN_REPOS//,/ }
     do
       MODULE_FLAGS="$MODULE_FLAGS --with $repo"
     done
-  echo "$MODULE_FLAGS"
-}
 
-BUILD_COMMAND="xcaddy build v2.6.0 \
-  $(getPluginModules) \
+fi
+
+wait
+
+BUILD_COMMAND="xcaddy build v2.7.6 \
+  $MODULE_FLAGS \
   --with github.com/appmasker/caddy-admin-repeat=./caddy-admin-repeat \
   --with github.com/appmasker/caddy_rest_storage=./caddy_rest_storage"
 

@@ -2,7 +2,7 @@
 
 set -e # exit on failure
 
-CADDY_VERSION=v2.6.0
+CADDY_VERSION=v2.7.6
 
 echo "Making repos dir"
 rm -rf repos

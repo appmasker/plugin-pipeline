@@ -3,7 +3,7 @@ FROM golang:1.19-alpine
 ARG ENVIRONMENT="development"
 
 ENV ENVIRONMENT=$ENVIRONMENT
-ENV XCADDY_VERSION v0.3.1
+ENV XCADDY_VERSION v0.3.5
 # Configures xcaddy to build with this version of Caddy
 ENV CADDY_VERSION v2.6.0
 # Configures xcaddy to not clean up post-build (unnecessary in a container)
@@ -31,7 +31,7 @@ RUN set -eux; \
 		s390x)   binArch='s390x'; checksum='a7ed957d3b9cda7345ae4444302d53c12cf648ec7c354de93c92fbd7a10d104d90cc2b3b41ff357969baaeadb6dab5c074f735bcc41520b7ba35dada87a4ac8f' ;; \
 		*) echo >&2 "error: unsupported architecture ($apkArch)"; exit 1 ;;\
 	esac; \
-	wget -O /tmp/xcaddy.tar.gz "https://github.com/caddyserver/xcaddy/releases/download/v0.3.1/xcaddy_0.3.1_linux_${binArch}.tar.gz"; \
+	wget -O /tmp/xcaddy.tar.gz "https://github.com/caddyserver/xcaddy/releases/download/v0.3.5/xcaddy_0.3.5_linux_${binArch}.tar.gz"; \
 	echo "$checksum  /tmp/xcaddy.tar.gz" | sha512sum -c; \
 	tar x -z -f /tmp/xcaddy.tar.gz -C /usr/bin xcaddy; \
 	rm -f /tmp/xcaddy.tar.gz; \

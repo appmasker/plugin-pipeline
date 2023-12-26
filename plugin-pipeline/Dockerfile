@@ -1,4 +1,4 @@
-FROM appmasker/prefetch-deps:v2.6.0 AS builder
+FROM appmasker/prefetch-deps:v2.7.6 AS builder
 
 ARG ACCESS_TOKEN_USR="nothing"
 ARG ACCESS_TOKEN_PWD="nothing"
@@ -21,7 +21,7 @@ COPY ./plugin-pipeline /plugin-pipeline/
 
 RUN chmod +x /plugin-pipeline/build-caddy.sh && /plugin-pipeline/build-caddy.sh $APPMASKER_ACCESS_TOKEN $ACCESS_TOKEN_USR $ACCESS_TOKEN_PWD $PLUGIN_REPOS
 
-FROM caddy:2.6.0
+FROM caddy:2.7.6
 
 COPY --from=builder /usr/bin/caddy /usr/bin/caddy
 
