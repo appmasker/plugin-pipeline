@@ -1,5 +1,7 @@
 # Plugin Pipeline
-A dockerfile for assembling custom Caddy builds
+A dockerfile for assembling custom Caddy builds.
+
+We push a tar file to github so that it can be downloaded elsewhere.
 
 
 ## Build tar file
