@@ -1,4 +1,4 @@
-FROM golang:1.19-alpine
+FROM golang:1.21.5-alpine3.19
 
 ARG ENVIRONMENT="development"
 
@@ -10,9 +10,10 @@ ENV CADDY_VERSION v2.7.6
 ENV XCADDY_SKIP_CLEANUP 1
 # Install dependencies and make Caddy directories
 RUN apk add --no-cache \
+    ca-certificates \
     git \
-    jq \
-    ca-certificates; \
+		libcap \
+    jq; \
     mkdir -p \
       /config/caddy \
       /data/caddy \

@@ -27,7 +27,6 @@ PLUGIN_REPOS=$(jq -r .PLUGIN_REPOS caddy-build.json)
 
 GOPRIVATE=github.com/$ACCESS_TOKEN_USR/*
 
-echo "Token: ${GITHUB_APPMASKER_TOKEN}"
 echo "Creating .netrc"
 
 printf "machine github.com\n\
@@ -49,25 +48,39 @@ wait
 
 echo "Done cloning repos. Assembling user plugins."
 
-getPluginModules() {
-  MODULE_FLAGS=""
+MODULE_FLAGS=""
+
+if [ "$ACCESS_TOKEN_PWD" != "nothing" ]; then
+  echo "Cloning user repos in parallel with oauth2 token"
+  for repo in ${PLUGIN_REPOS//,/ }
+    do
+      echo "Processing repo: $repo"
+      git clone "https://oauth2:${ACCESS_TOKEN_PWD}@${repo}" --single-branch --depth 1 &
+      
+      path=$(basename "$repo")
+      MODULE_FLAGS="$MODULE_FLAGS --with $repo=./$path"
+    done
+
+  echo "Done cloning repos with oauth2 token. Assembling user plugins."
+else
+  echo "No oauth2 token provided."
   for repo in ${PLUGIN_REPOS//,/ }
     do
       MODULE_FLAGS="$MODULE_FLAGS --with $repo"
     done
-  echo "$MODULE_FLAGS"
-}
+
+fi
+
+wait
 
 echo "Building Caddy with xCaddy"
 
 BUILD_COMMAND="xcaddy build \
-  $(getPluginModules) \
+  $MODULE_FLAGS \
   --with github.com/appmasker/caddy-admin-repeat=./caddy-admin-repeat \
   --with github.com/appmasker/caddy_rest_storage=./caddy_rest_storage"
-# BUILD_COMMAND="xcaddy build 6e6557926cf8cf732f0a3cb802a15878d8976690 \
-#   $(getPluginModules) \
-#   --with github.com/appmasker/caddy-admin-repeat@07155b787c4c4c92f2fc58924f509198cfaf996d \
-#   --with github.com/appmasker/caddy_rest_storage@77f64b11c270d63d559618b0a1eca87d695de038"
+
+echo "FINAL COMMAND: $BUILD_COMMAND"
 
 eval "$BUILD_COMMAND"
 
