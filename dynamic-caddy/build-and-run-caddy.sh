@@ -24,6 +24,12 @@ GITHUB_APPMASKER_TOKEN=$(jq -r .GITHUB_APPMASKER_TOKEN caddy-build.json)
 ACCESS_TOKEN_USR=$(jq -r .ACCESS_TOKEN_USR caddy-build.json)
 ACCESS_TOKEN_PWD=$(jq -r .ACCESS_TOKEN_PWD caddy-build.json)
 PLUGIN_REPOS=$(jq -r .PLUGIN_REPOS caddy-build.json)
+STATIC_CONTENT_provider=$(jq -r .STATIC_CONTENT.provider caddy-build.json)
+STATIC_CONTENT_url=$(jq -r .STATIC_CONTENT.url caddy-build.json)
+STATIC_CONTENT_repo=$(jq -r .STATIC_CONTENT.repo caddy-build.json)
+STATIC_CONTENT_owner=$(jq -r .STATIC_CONTENT.owner caddy-build.json)
+STATIC_CONTENT_branch=$(jq -r .STATIC_CONTENT.branch caddy-build.json)
+STATIC_CONTENT_path=$(jq -r .STATIC_CONTENT.path caddy-build.json)
 
 GOPRIVATE=github.com/$ACCESS_TOKEN_USR/*
 
@@ -69,6 +75,12 @@ else
       MODULE_FLAGS="$MODULE_FLAGS --with $repo"
     done
 
+fi
+
+if [ "$STATIC_CONTENT_provider" == "github" ]; then
+  echo "Cloning static content repo from github"
+  GIT_URL=$( [[ -n "$ACCESS_TOKEN_PWD" ]] && echo "https://oauth2:${ACCESS_TOKEN_PWD}@github.com/${STATIC_CONTENT_owner}/${STATIC_CONTENT_repo}.git" || echo "https://github.com/${STATIC_CONTENT_owner}/${STATIC_CONTENT_repo}.git" )
+  git clone $GIT_URL ./static --single-branch --depth 1 --branch "$STATIC_CONTENT_branch" &
 fi
 
 wait
