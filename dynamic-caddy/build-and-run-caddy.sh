@@ -77,10 +77,18 @@ else
 
 fi
 
+# echo the static content values
+echo "STATIC_CONTENT_provider: $STATIC_CONTENT_provider"
+echo "STATIC_CONTENT_url: $STATIC_CONTENT_url"
+echo "STATIC_CONTENT_repo: $STATIC_CONTENT_repo"
+echo "STATIC_CONTENT_owner: $STATIC_CONTENT_owner"
+echo "STATIC_CONTENT_branch: $STATIC_CONTENT_branch"
+echo "STATIC_CONTENT_path: $STATIC_CONTENT_path"
+
 if [ "$STATIC_CONTENT_provider" == "github" ]; then
   echo "Cloning static content repo from github"
   GIT_URL=$( [[ -n "$ACCESS_TOKEN_PWD" ]] && echo "https://oauth2:${ACCESS_TOKEN_PWD}@github.com/${STATIC_CONTENT_owner}/${STATIC_CONTENT_repo}.git" || echo "https://github.com/${STATIC_CONTENT_owner}/${STATIC_CONTENT_repo}.git" )
-  git clone $GIT_URL ./static --single-branch --depth 1 --branch "$STATIC_CONTENT_branch" &
+  git clone $GIT_URL /static --single-branch --depth 1 --branch "$STATIC_CONTENT_branch" &
 fi
 
 wait
