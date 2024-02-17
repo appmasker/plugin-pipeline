@@ -11,5 +11,25 @@
         }
       }
     }
+  },
+  "logging": {
+    "logs": {
+      "default": {
+        "writer": {
+          "address": "tcp/164.92.76.233:5000",
+          "output": "net",
+          "soft_start": true
+        },
+        "encoder": {
+          "fields": {
+            "account": "{env.ACCOUNT_ID}",
+            "app": "{env.FLY_APP_NAME}",
+            "machine": "{env.FLY_ALLOC_ID}"
+          },
+          "format": "add"
+        },
+        "level": "debug"
+      }
+    }
   }
 }

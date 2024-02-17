@@ -95,7 +95,8 @@ wait
 
 echo "Building Caddy with xCaddy"
 
-BUILD_COMMAND="xcaddy build \
+# building with this commit hash: https://github.com/caddyserver/caddy/pull/6069/commits
+BUILD_COMMAND="xcaddy build ad08746732f845112e2981142dc4b20437e7c1d6 \
   $MODULE_FLAGS \
   --with github.com/appmasker/caddy-admin-repeat=./caddy-admin-repeat \
   --with github.com/appmasker/caddy_rest_storage=./caddy_rest_storage"

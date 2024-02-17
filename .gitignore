@@ -1,3 +1,6 @@
 .DS_Store
 .env
 caddy-builder/repos
+
+caddy
+Caddyfile
